@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,17 +35,31 @@ public class TranslatorController {
   }
 
   @GetMapping("/translate")
-  public List<Translator> getAlltTranslators() {
-    return translatorRepository.findAll();
+  public Map<String, List<Translator>>getAlltTranslators() {
+	  Map<String,List<Translator>> Translations=new HashMap<>();
+	  Translations.put("Translations",translatorRepository.findAll());
+    return Translations ;
   }
 
   @GetMapping("/translate/{variable}")
-  public ResponseEntity<Translator> gettranslateById(@PathVariable(value = "id") Long id) {
-    Translator trans = translatorRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("Translate  not found :: " + id));
+  public ResponseEntity<Translator> gettranslateByVariable(@PathVariable(value = "variable") String variable) {
+    Translator trans = translatorRepository.findByvariable(variable);
+    if (trans == null) {
+      throw  new ResourceNotFoundException("Translate  not found :: " + variable);
+    }
     return ResponseEntity.ok().body(trans);
   }
 
+//  @GetMapping("/translate/{variable}")
+//  public ResponseEntity<Translator> translateKey(@RequestParam(value = "variable") String variable, @RequestParam(value = "language") String language) {
+//    Translator trans = translatorRepository.findByvariable(variable);
+//    if (trans == null) {
+//      throw  new ResourceNotFoundException("Translate  not found :: " + variable);
+//    }
+//    return ResponseEntity.ok().body(trans);
+//  }
+
+  
   @DeleteMapping("/translate/{variable}")
   public Map<String, Boolean> delettranslate(@PathVariable(value = "variable") Long variable) {
     Translator trans = translatorRepository.findById(variable)
@@ -53,19 +69,24 @@ public class TranslatorController {
     response.put("deleted", Boolean.TRUE);
     return response;
   }
-
-  @PutMapping("/translate{variable}")
-  public ResponseEntity<Translator> updatetranslate(@PathVariable(value = "variable") Long variable,
+  @GetMapping("/translate/variables")
+  public ArrayList<String> getAllVariabels() {
+    return (ArrayList<String>) translatorRepository.findAllVariable();
+  }
+  @PutMapping("/translate/{variable}")
+  public ResponseEntity<Translator> updatetranslate(@PathVariable(value = "variable") String variable,
       @RequestBody Translator transDetails) {
-    Translator trans = translatorRepository.findById(variable)
-        .orElseThrow(() -> new ResourceNotFoundException("translation not found :: " + variable));
-
-    trans.setfrench(transDetails.getfrench());
-    trans.setenglish(transDetails.getenglish());
-    trans.setswahili(transDetails.getswahili());
-    trans.setkinyrwanda(transDetails.getkinyrwanda());
+	  Translator trans = translatorRepository.findByvariable(variable);
+	    if (trans == null) {
+	      throw  new ResourceNotFoundException("Translate  not found :: " + variable);
+	    }
+    trans.setfrench(transDetails.getfrench() != null ? transDetails.getfrench() : trans.getfrench() );
+    trans.setenglish(transDetails.getenglish() != null ? transDetails.getenglish() : trans.getenglish());
+    trans.setswahili(transDetails.getswahili() != null ? transDetails.getswahili() : trans.getswahili());
+    trans.setkinyrwanda(transDetails.getkinyrwanda() != null ? transDetails.getkinyrwanda() : trans.getkinyrwanda());
     final Translator updatedstranslation = translatorRepository.save(trans);
     return ResponseEntity.ok(updatedstranslation);
   }
+  
 
 }
