@@ -83,7 +83,7 @@ public class TranslatorController {
     trans.setfrench(transDetails.getfrench() != null ? transDetails.getfrench() : trans.getfrench() );
     trans.setenglish(transDetails.getenglish() != null ? transDetails.getenglish() : trans.getenglish());
     trans.setswahili(transDetails.getswahili() != null ? transDetails.getswahili() : trans.getswahili());
-    trans.setkinyrwanda(transDetails.getkinyrwanda() != null ? transDetails.getkinyrwanda() : trans.getkinyrwanda());
+    trans.setkinyarwanda(transDetails.getkinyarwanda() != null ? transDetails.getkinyarwanda() : trans.getkinyarwanda());
     final Translator updatedstranslation = translatorRepository.save(trans);
     return ResponseEntity.ok(updatedstranslation);
   }

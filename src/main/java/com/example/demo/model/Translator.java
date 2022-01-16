@@ -18,7 +18,7 @@ public class Translator extends AuditModel {
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "Variable", nullable = true, unique = true)
+	@Column(name = "Variable", nullable =false, unique = true)
 	private String variable;
 
 	@Column(name = "English")
@@ -37,9 +37,9 @@ public class Translator extends AuditModel {
 		super();
 	}
 
-	public Translator(String kinyrwanda, String swahili, String french, String variable, String englishs) {
+	public Translator(String kinyarwanda, String swahili, String french, String variable, String englishs) {
 		super();
-		this.kinyarwanda = kinyrwanda;
+		this.kinyarwanda = kinyarwanda;
 		this.swahili = swahili;
 		this.french = french;
 		this.variable = variable;
@@ -70,11 +70,11 @@ public class Translator extends AuditModel {
 		this.id = id;
 	}
 
-	public String getkinyrwanda() {
+	public String getkinyarwanda() {
 		return kinyarwanda;
 	}
 
-	public void setkinyrwanda(String kinyarwanda) {
+	public void setkinyarwanda(String kinyarwanda) {
 		this.kinyarwanda = kinyarwanda;
 	}
 
