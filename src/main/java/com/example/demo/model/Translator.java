@@ -74,8 +74,8 @@ public class Translator extends AuditModel {
 		return kinyarwanda;
 	}
 
-	public void setkinyrwanda(String kinyrwanda) {
-		this.kinyarwanda = kinyrwanda;
+	public void setkinyrwanda(String kinyarwanda) {
+		this.kinyarwanda = kinyarwanda;
 	}
 
 	public String getswahili() {
