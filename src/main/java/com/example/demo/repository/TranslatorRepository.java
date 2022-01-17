@@ -18,10 +18,10 @@ public interface TranslatorRepository extends JpaRepository<Translator, Long> {
 	Translator findByvariable(String variable);
 	@Query("SELECT variable FROM Translator")
 	ArrayList<String> findAllVariable();
-@Transactional
-@Modifying
-@Query("delete from Translator t where t.variable=?1")
-Map<String,Boolean> deleteByVariable(String variable);
+//@Transactional
+//@Modifying
+//@Query("delete from Translator t where t.variable=?1")
+//Map<String,Boolean> deleteByVariable(String variable);
 //	@Transactional
 //	@Modifying
 //	@Query("update Translations t set t.language =?1 where u.variable = ?2")
