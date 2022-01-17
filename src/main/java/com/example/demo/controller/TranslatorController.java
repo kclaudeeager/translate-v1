@@ -82,10 +82,10 @@ Translator trans = translatorRepository.findByvariable(variable);
 	    if (trans == null) {
 	      throw  new ResourceNotFoundException("Translate  not found :: " + variable);
 	    }
-    trans.setfrench(transDetails.getfrench() != null ? transDetails.getfrench() : trans.getfrench() );
-    trans.setenglish(transDetails.getenglish() != null ? transDetails.getenglish() : trans.getenglish());
-    trans.setswahili(transDetails.getswahili() != null ? transDetails.getswahili() : trans.getswahili());
-    trans.setkinyarwanda(transDetails.getkinyarwanda() != null ? transDetails.getkinyarwanda() : trans.getkinyarwanda());
+    trans.setfrench(transDetails.getfrench() != (null||"") ? transDetails.getfrench() : trans.getfrench() );
+    trans.setenglish(transDetails.getenglish() !=(null||"")? transDetails.getenglish() : trans.getenglish());
+    trans.setswahili(transDetails.getswahili() != (null||"") ? transDetails.getswahili() : trans.getswahili());
+    trans.setkinyarwanda(transDetails.getkinyarwanda() != (null||"")? transDetails.getkinyarwanda() : trans.getkinyarwanda());
     final Translator updatedstranslation = translatorRepository.save(trans);
     return ResponseEntity.ok(updatedstranslation);
   }
