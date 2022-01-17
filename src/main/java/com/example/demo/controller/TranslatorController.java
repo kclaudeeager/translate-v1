@@ -61,9 +61,11 @@ public class TranslatorController {
 
   
   @DeleteMapping("/translate/{variable}")
-  public Map<String, Boolean> delettranslate(@PathVariable(value = "variable") Long variable) {
-    Translator trans = translatorRepository.findById(variable)
-        .orElseThrow(() -> new ResourceNotFoundException("variable not found :: " + variable));
+  public Map<String, Boolean> delettranslate(@PathVariable(value = "variable") String variable){
+Translator trans = translatorRepository.findByvariable(variable);
+    if (trans == null) {
+      throw  new ResourceNotFoundException("Translate  not found :: " + variable);
+    }
     translatorRepository.delete(trans);
     Map<String, Boolean> response = new HashMap<>();
     response.put("deleted", Boolean.TRUE);
